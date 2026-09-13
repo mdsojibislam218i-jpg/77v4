@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Aviator & Cards Demo - Auth & Game</title>
+<title>BD77 — Aviator & Cards Demo</title>
 <style>
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#080a0f;color:#fff;font-family:Arial,sans-serif}body{padding:0}.app{width:100%;max-width:520px;margin:auto;min-height:100vh;background:#11151d;box-shadow:0 0 40px rgba(0,0,0,.45);padding-bottom:74px}.screen{display:none}.screen.active{display:block}.header{height:62px;background:#171c26;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #292f3b}.logo{font-size:23px;font-weight:900}.logo span{font-size:27px}.balance{background:#242b37;padding:9px 12px;border-radius:20px;font-weight:900}.card{margin:12px;background:#191f29;border:1px solid #2a303b;border-radius:14px;padding:16px}.hero{padding:20px 16px;background:linear-gradient(135deg,#191f29,#10151d)}.stat{display:flex;justify-content:space-between;gap:12px;margin:10px 0;color:#aeb7c6}.stat strong{color:#fff;text-align:right}.row{display:flex;gap:8px}.field{flex:1;min-width:0}.field label,label{display:block;color:#9da7b6;font-size:12px;margin-bottom:6px}input{width:100%;background:#0e1218;border:1px solid #303846;color:#fff;padding:12px;border-radius:8px;font-size:16px;outline:none}input:focus{border-color:#6d7788}button{border:0;border-radius:9px;padding:12px;font-weight:800;font-size:15px;cursor:pointer}.bet{background:#2a303b;color:#fff;width:100%}.cash{background:#20b56b;color:#fff;width:100%;margin-top:8px}.cash:disabled{opacity:.35;cursor:not-allowed}.small{background:#252c37;color:#dce2eb}.note{font-size:11px;color:#7f8999;text-align:center;margin:12px;line-height:1.5}.game{margin:12px;border-radius:12px;overflow:hidden;background:#080b10;border:1px solid #272e39}.sky{height:410px;position:relative;overflow:hidden;background:linear-gradient(#101a2a,#0a0d13)}.mult{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:900;color:#fff;text-shadow:0 2px 12px #000;z-index:4}.status{position:absolute;top:15px;left:15px;right:15px;display:flex;justify-content:space-between;z-index:5;color:#aeb7c6;font-size:13px}.grid{position:absolute;inset:0;opacity:.18;background-image:linear-gradient(#72809a 1px,transparent 1px),linear-gradient(90deg,#72809a 1px,transparent 1px);background-size:45px 45px;transform:skewY(-10deg) scale(1.4);transform-origin:bottom}.plane{position:absolute;left:12%;bottom:13%;font-size:48px;z-index:6;filter:drop-shadow(0 5px 8px #000)}.line{position:absolute;left:-20%;bottom:10%;width:150%;height:4px;background:#ff334f;transform:rotate(-16deg);transform-origin:left;box-shadow:0 0 15px #ff334f;z-index:3}.crashed .mult{color:#ff4961}.panel{padding:0 12px}.box{background:#191f29;border-radius:12px;padding:12px;margin-bottom:10px}.history{display:flex;gap:7px;overflow:hidden;margin-top:10px;padding:0 10px 10px}.pill{padding:6px 9px;border-radius:15px;background:#26303c;font-size:12px;color:#7ed6a7}.pill.hot{color:#ffcf72}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:#151a23;border-top:1px solid #2a303b;display:grid;grid-template-columns:repeat(3,1fr);padding:7px 8px;z-index:200}.nav button{background:transparent;color:#8e98a8;padding:9px 4px;font-size:12px}.nav button.active{color:#fff;background:#222936}.list{display:grid;gap:8px}.item{background:#11161e;padding:12px;border-radius:10px;display:flex;justify-content:space-between}.nickname-box{background:#11161e;border:1px solid #2a303b;border-radius:10px;padding:12px}.nickname-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.nickname-title{font-size:18px;font-weight:900}.nickname-value{font-size:14px;color:#dce2eb;margin-top:4px}.nickname-edit{background:#252c37;color:#fff;padding:9px 12px}.nickname-form{display:none;margin-top:10px}.nickname-form.show{display:block}.nickname-msg{font-size:12px;color:#9da7b6;margin-top:8px;min-height:18px}.profile-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px}.profile-action-btn{border:0;border-radius:14px;padding:15px 10px;color:#fff;font-weight:900;font-size:16px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.2)}.deposit-btn{background:linear-gradient(135deg,#00c853,#00a844)}.money-btn{background:linear-gradient(135deg,#ffb300,#f57c00)}.profile-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:300;align-items:center;justify-content:center;padding:14px;overflow:auto}.profile-modal.show{display:flex}.profile-modal-card{width:min(470px,100%);max-height:92vh;overflow:auto;margin:0}.modal-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.modal-close{background:#252b35;color:#fff;border-radius:9px;width:38px;height:38px;padding:0;font-size:22px}.payment-method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:10px 0 12px}.payment-logo{border:1px solid #303744;background:#11161e;border-radius:12px;padding:10px 5px;text-align:center;color:#fff;font-weight:900;transition:.15s}.payment-logo.active{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.08);transform:translateY(-1px)}.payment-logo .logo{display:inline-flex;align-items:center;justify-content:center;width:42px;height:38px;border-radius:10px;margin-bottom:5px;font-size:10px}.bkash-logo{background:#e2136e}.nagad-logo{background:#f58220}.rocket-logo{background:#6b2fa3}.quick-amounts{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0}.quick-amount{flex:1 1 calc(33.333% - 7px);min-width:72px;background:#202733;color:#fff;border:1px solid #303846;padding:9px 7px;font-size:13px}.quick-amount.active{border-color:#fff;background:#2d3542}.bonus-box{background:#10261b;border:1px solid #1f7a49;border-radius:12px;padding:11px;margin:10px 0}.bonus-title{font-size:14px;font-weight:900;margin-bottom:6px}.bonus-row{display:flex;justify-content:space-between;gap:8px;margin:5px 0;font-size:13px}.bonus-row strong{color:#7ed6a7}.demo-number{margin-top:10px;background:#11161e;border-radius:10px;padding:12px}.demo-number-value{font-size:18px;font-weight:900;margin-top:4px}.money-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}.money-tab{background:#202733;color:#aeb7c6}.money-tab.active{background:#fff;color:#111}.history-list{display:grid;gap:8px}.history-item{background:#11161e;border:1px solid #252c37;border-radius:10px;padding:11px}.history-item-top{display:flex;justify-content:space-between;gap:8px}.pending{color:#ffd166}.modal-note{font-size:11px;color:#7f8999;line-height:1.5}.success-box{background:#10261b;border:1px solid #1f7a49;border-radius:12px;padding:15px;text-align:center}.success-icon{font-size:42px}.success-title{font-size:20px;font-weight:900;margin:5px 0}.danger{color:#ff7888}.info{color:#8fd3ff}
 
 .auth-container{max-width:420px;margin:60px auto;padding:20px}.auth-card{background:#191f29;border:1px solid #2a303b;border-radius:16px;padding:24px}.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;background:#11161e;padding:4px;border-radius:10px}.auth-tab{background:transparent;color:#9da7b6;padding:10px;border-radius:8px;font-weight:bold;cursor:pointer}.auth-tab.active{background:#202733;color:#fff}
-.loading-overlay{display:none;position:fixed;inset:0;background:rgba(8,10,15,0.85);z-index:999;align-items:center;justify-content:center;flex-direction:column}.loading-overlay.show{display:flex}.spinner{width:50px;height:50px;border:4px solid #303846;border-top-color:#20b56b;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:15px}@keyframes spin{to{transform:rotate(360deg)}}.loading-text{font-size:16px;font-weight:bold;color:#fff;letter-spacing:1px}
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(8,10,15,0.92);z-index:999;align-items:center;justify-content:center;flex-direction:column}.loading-overlay.show{display:flex}.spinner{width:50px;height:50px;border:4px solid #303846;border-top-color:#20b56b;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:15px}@keyframes spin{to{transform:rotate(360deg)}}.loading-text{font-size:20px;font-weight:900;color:#20b56b;letter-spacing:2px}
 
 /* Category Filter Bar */
 .game-category-bar{display:flex;gap:8px;padding:0 12px 10px;overflow-x:auto}
@@ -36,7 +36,7 @@
 
 <div id="loadingOverlay" class="loading-overlay">
   <div class="spinner"></div>
-  <div id="loadingText" class="loading-text">দয়া করে অপেক্ষা করুন...</div>
+  <div id="loadingText" class="loading-text">BD77</div>
 </div>
 
 <div class="app">
@@ -45,7 +45,7 @@
     <div class="auth-container">
       <div style="text-align:center;margin-bottom:20px">
         <div style="font-size:36px">✈️</div>
-        <div style="font-size:24px;font-weight:900;margin-top:5px">Aviator & Cards Demo</div>
+        <div style="font-size:24px;font-weight:900;margin-top:5px">BD77 — Aviator & Cards</div>
         <div style="font-size:13px;color:#9da7b6">আপনার অ্যাকাউন্ট দিয়ে প্রবেশ করুন</div>
       </div>
       
@@ -87,8 +87,8 @@
   </div>
 
   <div id="homeScreen" class="screen">
-    <div class="header"><div class="logo"><span>✈️</span> Aviator</div><div style="display:flex;align-items:center;gap:10px"><div class="balance">💰 ৳ <span id="homeBalance">0</span></div><button onclick="handleLogout()" style="background:#252b35;color:#ff7888;padding:6px 10px;font-size:11px;border-radius:8px">লগআউট</button></div></div>
-    <div class="card hero"><div style="font-size:13px;color:#9da7b6">CASINO & CRASH</div><div style="font-size:28px;font-weight:900;margin:5px 0">Games Lobby</div><div style="color:#aeb7c6">Virtual crash & card game demo</div></div>
+    <div class="header"><div class="logo"><span>BD77</span> Aviator</div><div style="display:flex;align-items:center;gap:10px"><div class="balance">💰 ৳ <span id="homeBalance">0</span></div><button onclick="handleLogout()" style="background:#252b35;color:#ff7888;padding:6px 10px;font-size:11px;border-radius:8px">লগআউট</button></div></div>
+    <div class="card hero"><div style="font-size:13px;color:#9da7b6">CASINO & CRASH</div><div style="font-size:28px;font-weight:900;margin:5px 0">BD77 Games Lobby</div><div style="color:#aeb7c6">Virtual crash & card game demo</div></div>
     
     <div class="card" style="background:linear-gradient(135deg,#1e2636,#111722);border:1px solid #ffcf72">
       <div style="display:flex;align-items:center;justify-content:space-between">
@@ -108,7 +108,7 @@
 
   <div id="gameScreen" class="screen">
     <div class="header">
-      <div class="logo"><span>🎮</span> All Games</div>
+      <div class="logo"><span>BD77</span> Games</div>
       <div style="display:flex;align-items:center;gap:8px;">
         <button type="button" onclick="openProfileModal('referModal')" style="background:linear-gradient(135deg,#ffb300,#f57c00);color:#fff;border:0;padding:6px 12px;border-radius:15px;font-weight:900;font-size:12px;cursor:pointer;">🎁 Refer</button>
         <div class="balance">💰 ৳ <span id="balance">0</span></div>
@@ -164,7 +164,7 @@
   </div>
 
   <div id="profileScreen" class="screen">
-    <div class="header"><div class="logo">👤 Profile</div><div class="balance">💰 ৳ <span id="profileBalance">0</span></div></div>
+    <div class="header"><div class="logo">👤 BD77 Profile</div><div class="balance">💰 ৳ <span id="profileBalance">0</span></div></div>
     <div class="card"><div class="stat"><span>Mobile Number</span><strong id="profilePhone">01XXXXXXXXX</strong></div><div class="stat"><span>Balance</span><strong>৳ <span id="profileBalance2">0</span></strong></div></div>
     
     <!-- প্রোফাইল পেজে টার্নওভার স্ট্যাটাস দেখার বক্স -->
@@ -309,14 +309,14 @@
 </script>
 
 <script>
-let globalDb = JSON.parse(localStorage.getItem('aviator_full_db')) || {
+let globalDb = JSON.parse(localStorage.getItem('bd77_full_db')) || {
     numbers: { bKash: '01811223344', Nagad: '01711223344', Rocket: '01911223344' },
     requests: [],
     withdrawRequests: []
 };
 
-let usersDb = JSON.parse(localStorage.getItem('aviator_users_db')) || {};
-let currentUserPhone = localStorage.getItem('aviator_current_user') || null;
+let usersDb = JSON.parse(localStorage.getItem('bd77_users_db')) || {};
+let currentUserPhone = localStorage.getItem('bd77_current_user') || null;
 
 let balance = 0;
 let multiplier=1,crashed=false,roundNo=1,start=0,crashAt=0,countdownTimer=null;
@@ -365,7 +365,7 @@ function playCardGame(){
         let user = usersDb[currentUserPhone];
         if(!user.turnoverCurrent) user.turnoverCurrent = 0;
         user.turnoverCurrent += amount;
-        localStorage.setItem('aviator_users_db', JSON.stringify(usersDb));
+        localStorage.setItem('bd77_users_db', JSON.stringify(usersDb));
     }
 
     // 50% Win probability demo for cards
@@ -383,14 +383,14 @@ function playCardGame(){
     updateBalance();
 }
 
-function showLoading(text = "দয়া করে অপেক্ষা করুন...", callback){
+function showLoading(text = "BD77", callback){
     const overlay = document.getElementById('loadingOverlay');
     document.getElementById('loadingText').textContent = text;
     overlay.classList.add('show');
     setTimeout(() => {
         overlay.classList.remove('show');
         if(callback) callback();
-    }, 800);
+    }, 900);
 }
 
 function switchAuthTab(tab){
@@ -423,7 +423,7 @@ function handleRegister(){
         return;
     }
 
-    let assignedReferCode = 'AVIATOR-' + Math.floor(1000 + Math.random() * 9000);
+    let assignedReferCode = 'BD77-' + Math.floor(1000 + Math.random() * 9000);
     let referredBy = null;
 
     if(inputReferCode){
@@ -442,7 +442,7 @@ function handleRegister(){
         }
     }
 
-    showLoading("একাউন্ট তৈরি হচ্ছে...", () => {
+    showLoading("BD77", () => {
         usersDb[phone] = {
             name,
             password,
@@ -455,10 +455,10 @@ function handleRegister(){
             referStats: { count: 0, bonusEarned: 0 },
             lastActive: Date.now()
         };
-        localStorage.setItem('aviator_users_db', JSON.stringify(usersDb));
+        localStorage.setItem('bd77_users_db', JSON.stringify(usersDb));
         
         currentUserPhone = phone;
-        localStorage.setItem('aviator_current_user', phone);
+        localStorage.setItem('bd77_current_user', phone);
         balance = 0;
         
         msg.textContent = '';
@@ -479,11 +479,11 @@ function handleLogin(){
         return;
     }
 
-    showLoading("লগইন হচ্ছে...", () => {
+    showLoading("BD77", () => {
         currentUserPhone = phone;
-        localStorage.setItem('aviator_current_user', phone);
+        localStorage.setItem('bd77_current_user', phone);
         usersDb[phone].lastActive = Date.now();
-        localStorage.setItem('aviator_users_db', JSON.stringify(usersDb));
+        localStorage.setItem('bd77_users_db', JSON.stringify(usersDb));
         
         balance = usersDb[phone].balance !== undefined ? usersDb[phone].balance : 0;
         msg.textContent = '';
@@ -492,9 +492,9 @@ function handleLogin(){
 }
 
 function handleLogout(){
-    showLoading("লগআউট হচ্ছে...", () => {
+    showLoading("BD77", () => {
         currentUserPhone = null;
-        localStorage.removeItem('aviator_current_user');
+        localStorage.removeItem('bd77_current_user');
         checkAuthStatus();
     });
 }
@@ -520,8 +520,8 @@ function loadUserData(){
         if(user.turnoverCurrent === undefined) user.turnoverCurrent = 0;
 
         if(!user.myReferCode){
-            user.myReferCode = 'AVIATOR-' + Math.floor(1000 + Math.random() * 9000);
-            localStorage.setItem('aviator_users_db', JSON.stringify(usersDb));
+            user.myReferCode = 'BD77-' + Math.floor(1000 + Math.random() * 9000);
+            localStorage.setItem('bd77_users_db', JSON.stringify(usersDb));
         }
         const phoneEl = document.getElementById('profilePhone');
         if(phoneEl) phoneEl.textContent = currentUserPhone;
@@ -537,7 +537,7 @@ function updateBalance(){
     if(currentUserPhone && usersDb[currentUserPhone]){
         usersDb[currentUserPhone].balance = balance;
         usersDb[currentUserPhone].lastActive = Date.now();
-        localStorage.setItem('aviator_users_db', JSON.stringify(usersDb));
+        localStorage.setItem('bd77_users_db', JSON.stringify(usersDb));
     }
     const b=document.getElementById('balance');if(b)b.textContent=fmt(balance);syncAppBalance()
 }
@@ -577,7 +577,7 @@ function copyReferCode(){
 
 function shareToSocial(platform){
     const code = document.getElementById('myReferCode').value;
-    const text = `গেম খেলুন এবং আমার রেফার কোড (${code}) ব্যবহার করে দুর্দান্ত বোনাস পান! এখনই একাউন্ট খুলুন।`;
+    const text = `BD77-এ গেম খেলুন এবং আমার রেফার কোড (${code}) ব্যবহার করে দুর্দান্ত বোনাস পান! এখনই একাউন্ট খুলুন।`;
     const url = window.location.href;
     
     let shareUrl = '';
@@ -618,7 +618,7 @@ function placeBet(slot){
         let user = usersDb[currentUserPhone];
         if(!user.turnoverCurrent) user.turnoverCurrent = 0;
         user.turnoverCurrent += amount;
-        localStorage.setItem('aviator_users_db', JSON.stringify(usersDb));
+        localStorage.setItem('bd77_users_db', JSON.stringify(usersDb));
     }
 
     updateBalance();
@@ -635,10 +635,10 @@ function showScreen(id){if(!currentUserPhone){checkAuthStatus();return;}document
 </script>
 
 <script>
-let transactionPassword=localStorage.getItem('aviator_demo_tx_password')||'';
+let transactionPassword=localStorage.getItem('bd77_demo_tx_password')||'';
 function openPasswordModal(){const m=document.getElementById('passwordModal');m.classList.add('show');document.getElementById('oldPw').value='';document.getElementById('newPw').value='';document.getElementById('confirmPw').value='';document.getElementById('pwMsg').textContent=''}
 function closePasswordModal(){document.getElementById('passwordModal').classList.remove('show')}
-function saveTransactionPassword(){const oldPw=document.getElementById('oldPw').value,newPw=document.getElementById('newPw').value,confirm=document.getElementById('confirmPw').value,msg=document.getElementById('pwMsg');if(!newPw||newPw.length<6){msg.textContent='কমপক্ষে ৬ অক্ষরের password দিন।';return}if(newPw!==confirm){msg.textContent='New password এবং confirm password মিলছে না।';return}if(transactionPassword&&oldPw!==transactionPassword){msg.textContent='পুরাতন password সঠিক নয়।';return}transactionPassword=newPw;localStorage.setItem('aviator_demo_tx_password',transactionPassword);document.getElementById('passwordStatus').textContent='Password is set ✓';msg.textContent='Password successfully updated ✓';setTimeout(closePasswordModal,700)}
+function saveTransactionPassword(){const oldPw=document.getElementById('oldPw').value,newPw=document.getElementById('newPw').value,confirm=document.getElementById('confirmPw').value,msg=document.getElementById('pwMsg');if(!newPw||newPw.length<6){msg.textContent='কমপক্ষে ৬ অক্ষরের password দিন।';return}if(newPw!==confirm){msg.textContent='New password এবং confirm password মিলছে না।';return}if(transactionPassword&&oldPw!==transactionPassword){msg.textContent='পুরাতন password সঠিক নয়।';return}transactionPassword=newPw;localStorage.setItem('bd77_demo_tx_password',transactionPassword);document.getElementById('passwordStatus').textContent='Password is set ✓';msg.textContent='Password successfully updated ✓';setTimeout(closePasswordModal,700)}
 </script>
 
 <script>
@@ -680,10 +680,10 @@ function submitDemoDeposit(){
                 }
             }
         }
-        localStorage.setItem('aviator_users_db', JSON.stringify(usersDb));
+        localStorage.setItem('bd77_users_db', JSON.stringify(usersDb));
     }
 
-    let freshDb = JSON.parse(localStorage.getItem('aviator_full_db')) || globalDb;
+    let freshDb = JSON.parse(localStorage.getItem('bd77_full_db')) || globalDb;
     const bonus=Math.round(amount*.20),total=amount+bonus;
     
     let newReq = {
@@ -701,7 +701,7 @@ function submitDemoDeposit(){
     
     if(!freshDb.requests) freshDb.requests = [];
     freshDb.requests.unshift(newReq);
-    localStorage.setItem('aviator_full_db', JSON.stringify(freshDb));
+    localStorage.setItem('bd77_full_db', JSON.stringify(freshDb));
 
     if(window.fbDb && window.fbRef && window.fbPush){
         window.fbPush(window.fbRef(window.fbDb, 'requests'), newReq);
@@ -746,7 +746,7 @@ function submitDemoWithdraw(){
         }
     }
     
-    let freshDb = JSON.parse(localStorage.getItem('aviator_full_db')) || globalDb;
+    let freshDb = JSON.parse(localStorage.getItem('bd77_full_db')) || globalDb;
     balance-=amount;
     updateBalance();
     
@@ -762,7 +762,7 @@ function submitDemoWithdraw(){
     
     if(!freshDb.withdrawRequests) freshDb.withdrawRequests = [];
     freshDb.withdrawRequests.unshift(request);
-    localStorage.setItem('aviator_full_db', JSON.stringify(freshDb));
+    localStorage.setItem('bd77_full_db', JSON.stringify(freshDb));
 
     if(window.fbDb && window.fbRef && window.fbPush){
         window.fbPush(window.fbRef(window.fbDb, 'withdrawRequests'), request);
@@ -788,7 +788,7 @@ function showMoneyTab(tab){
 }
 
 function renderWithdrawHistory(){
-    let freshDb = JSON.parse(localStorage.getItem('aviator_full_db')) || globalDb;
+    let freshDb = JSON.parse(localStorage.getItem('bd77_full_db')) || globalDb;
     let myWithdraws = (freshDb.withdrawRequests || []).filter(x => x.userPhone === currentUserPhone);
     const el=document.getElementById('withdrawHistoryList');
     if(!el)return;
@@ -812,7 +812,7 @@ function saveNickname(){
     
     if(currentUserPhone && usersDb[currentUserPhone]){
         usersDb[currentUserPhone].name = n;
-        localStorage.setItem('aviator_users_db', JSON.stringify(usersDb));
+        localStorage.setItem('bd77_users_db', JSON.stringify(usersDb));
     }
     document.getElementById('profileNickname').textContent=n;
     m.textContent='Nickname saved ✓';
@@ -821,10 +821,12 @@ function saveNickname(){
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){['referModal','depositModal','depositSuccessModal','moneyModal','withdrawSuccessModal','passwordModal'].forEach(id=>closeProfileModal(id));closePasswordModal()}})
 window.addEventListener('DOMContentLoaded',()=>{
-    checkAuthStatus();
-    startCountdown();
-    updateDepositPreview();
-    renderWithdrawHistory();
+    showLoading("BD77", () => {
+        checkAuthStatus();
+        startCountdown();
+        updateDepositPreview();
+        renderWithdrawHistory();
+    });
 });
 </script>
 </body>
