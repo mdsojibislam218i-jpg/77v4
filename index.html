@@ -184,11 +184,11 @@
         <div style="font-size:21px;font-weight:900">🎁 Referral Program</div>
         <button class="modal-close" type="button" onclick="closeProfileModal('referModal')">×</button>
       </div>
-      <div class="modal-note">আপনার ইউনিক রেফার কোড শেয়ার করুন। বন্ধু এই কোড ব্যবহার করে অ্যাকাউন্ট খুলে মোট ৳২,০০০ ডিপোজিট ও ৳৫,০০০ বাজি ধরলেই আপনি পাবেন ৳৩৯৯ বোনাস!</div>
+      <div class="modal-note">আপনার অ্যাপের নাম এবং ইউনিক রেফার আইডি সহ লিংক শেয়ার করুন। বন্ধু এই লিংকে ক্লিক করে অ্যাকাউন্ট খুলে মোট ৳২,০০০ ডিপোজিট ও ৳৫,০০০ বাজি ধরলেই আপনি পাবেন ৳৩৯৯ বোনাস!</div>
       
-      <label style="margin-top:12px">আপনার রেফার কোড ও লিংক</label>
+      <label style="margin-top:12px">অ্যাপের নাম ও রেফার আইডিযুক্ত লিংক</label>
       <div class="row">
-        <input id="myReferCode" type="text" value="" readonly style="font-weight:900;text-align:center;letter-spacing:1px">
+        <input id="myReferCode" type="text" value="" readonly style="font-weight:900;text-align:center;letter-spacing:1px;font-size:13px">
         <button class="small" type="button" onclick="copyReferCode()" style="padding:0 16px">Copy</button>
       </div>
 
@@ -313,6 +313,25 @@ let multiplier=1,crashed=false,roundNo=1,start=0,crashAt=0,countdownTimer=null;
 let bets={1:{active:false,amount:0},2:{active:false,amount:0}},history=[];
 const multEl=document.getElementById('mult'),stateEl=document.getElementById('state'),plane=document.getElementById('plane'),sky=document.getElementById('sky'),countdown=document.getElementById('countdown'),countNum=document.getElementById('countNum');
 
+// পেজ লোড হওয়ার সময় URL থেকে রেফার কোড চেক করা এবং অটো ইনপুট ফিল্ডে বসিয়ে দেওয়া
+window.addEventListener('DOMContentLoaded',()=>{
+    const urlParams = new URLSearchParams(window.location.search);
+    const refFromUrl = urlParams.get('ref');
+    if(refFromUrl){
+        const regReferInput = document.getElementById('regReferCode');
+        if(regReferInput){
+            regReferInput.value = refFromUrl;
+        }
+        // অটো রেজিস্ট্রেশন ট্যাবে নিয়ে যাওয়া যাতে নতুন ইউজার সহজে সাইন আপ করতে পারে
+        switchAuthTab('register');
+    }
+
+    checkAuthStatus();
+    startCountdown();
+    updateDepositPreview();
+    renderWithdrawHistory();
+});
+
 function showLoading(text = "দয়া করে অপেক্ষা করুন...", callback){
     const overlay = document.getElementById('loadingOverlay');
     document.getElementById('loadingText').textContent = text;
@@ -387,7 +406,6 @@ function handleRegister(){
             lastActive: Date.now()
         };
 
-        // কাউকে রেফার করলে সাথে সাথে রেফার কাউন্ট বৃদ্ধি পাবে
         if(referredBy && usersDb[referredBy]){
             if(!usersDb[referredBy].referStats) usersDb[referredBy].referStats = { count: 0, bonusEarned: 0 };
             usersDb[referredBy].referStats.count += 1;
@@ -487,8 +505,14 @@ function syncAppBalance(){
     
     if(currentUserPhone && usersDb[currentUserPhone]){
         let user = usersDb[currentUserPhone];
+        
+        // অ্যাপের নাম এবং ইউজারের ইউনিক রেফার আইডি দিয়ে ডাইনামিক রেফার লিংক তৈরি করা
+        let appName = "AviatorDemo"; 
+        let fullReferLink = window.location.origin + window.location.pathname + "?ref=" + user.myReferCode;
+        
         const refCodeEl = document.getElementById('myReferCode');
-        if(refCodeEl) refCodeEl.value = user.myReferCode;
+        if(refCodeEl) refCodeEl.value = fullReferLink;
+
         const refCountEl = document.getElementById('totalReferredCount');
         if(refCountEl) refCountEl.textContent = (user.referStats ? user.referStats.count : 0) + ' জন';
         const refBonusEl = document.getElementById('totalReferBonus');
@@ -510,23 +534,22 @@ function copyReferCode(){
     const codeBox = document.getElementById('myReferCode');
     codeBox.select();
     navigator.clipboard.writeText(codeBox.value);
-    alert('রেফার কোড কপি করা হয়েছে!');
+    alert('অ্যাপের নাম ও রেফার আইডিযুক্ত লিংক কপি করা হয়েছে!');
 }
 
 function shareToSocial(platform){
-    const code = document.getElementById('myReferCode').value;
-    const text = `Aviator গেম খেলুন এবং আমার রেফার কোড (${code}) ব্যবহার করে দুর্দান্ত বোনাস পান! এখনই একাউন্ট খুলুন।`;
-    const url = window.location.href;
+    const link = document.getElementById('myReferCode').value;
+    const text = `Aviator Demo গেম খেলুন! আমার এই রেফার লিংক ব্যবহার করে একাউন্ট খুলুন এবং দারুণ বোনাস পান:`;
     
     let shareUrl = '';
     if(platform === 'whatsapp'){
-        shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + url)}`;
+        shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + link)}`;
     } else if(platform === 'imo'){
-        shareUrl = `https://imo.im/share?text=${encodeURIComponent(text + ' ' + url)}`;
+        shareUrl = `https://imo.im/share?text=${encodeURIComponent(text + ' ' + link)}`;
     } else if(platform === 'telegram'){
-        shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+        shareUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`;
     } else if(platform === 'facebook'){
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`;
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&quote=${encodeURIComponent(text)}`;
     }
     
     if(shareUrl){
@@ -557,7 +580,6 @@ function placeBet(slot){
         if(!user.turnoverCurrent) user.turnoverCurrent = 0;
         user.turnoverCurrent += amount;
 
-        // বন্ধু যদি ২০০০ টাকা ডিপোজিট করে এবং ৫০০০ টাকা বাজি ধরে, তবে রেফারকারী ৩৯৯ টাকা বোনাস পাবে
         if(user.referredBy && !user.referBonusGiven){
             if(user.totalDeposit >= 2000 && user.turnoverCurrent >= 5000){
                 user.referBonusGiven = true;
@@ -619,7 +641,6 @@ function submitDemoDeposit(){
         const bonus=Math.round(amount*.20),total=amount+bonus;
         currentUser.turnoverTarget = (currentUser.turnoverTarget || 0) + total;
 
-        // ডিপোজিট করার পর যদি শর্ত (২০০০ ডিপোজিট + ৫০০০ বাজি) পূরণ হয়ে থাকে, তবে বোনাস যোগ হবে
         if(currentUser.referredBy && !currentUser.referBonusGiven){
             if(currentUser.totalDeposit >= 2000 && (currentUser.turnoverCurrent || 0) >= 5000){
                 currentUser.referBonusGiven = true;
@@ -771,12 +792,6 @@ function saveNickname(){
 }
 
 document.addEventListener('keydown',e=>{e.key==='Escape'&&(['referModal','depositModal','depositSuccessModal','moneyModal','withdrawSuccessModal','passwordModal'].forEach(id=>closeProfileModal(id)),closePasswordModal())})
-window.addEventListener('DOMContentLoaded',()=>{
-    checkAuthStatus();
-    startCountdown();
-    updateDepositPreview();
-    renderWithdrawHistory();
-});
 </script>
 </body>
 </html>
