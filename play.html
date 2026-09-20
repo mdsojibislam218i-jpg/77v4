@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wild Bounty Showdown - VIP Edition</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+        body {
+            background-color: #030508;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* NEW VIP LOADING SCREEN DESIGN */
+        #loader-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #2b1204 0%, #030508 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+
+        .loader-container {
+            text-align: center;
+            width: 80%;
+            max-width: 350px;
+        }
+
+        /* Game Title in Loader */
+        .loader-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: #f3c669;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px #ff9900, 0 0 25px #ff5500;
+            margin-bottom: 20px;
+            font-family: 'Impact', fantasy;
+        }
+
+        /* The Stylish Game Picture */
+        .loader-img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            border: 4px solid #d4af37;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.9);
+            /* Using a Western-themed image similar to the game */
+            content: url('https://img.itch.zone/aW1nLzQxMzgwNzIucG5n/original/4z00C%2F.png');
+            margin-bottom: 25px;
+        }
+
+        /* Modern Progress Bar */
+        .loader-progress-track {
+            width: 100%;
+            height: 10px;
+            background: #1a0903;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #8c6a38;
+        }
+
+        .loader-progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ffcc00, #ff5500);
+            border-radius: 4px;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px #ff5500;
+        }
+
+        .loader-text {
+            margin-top: 12px;
+            font-size: 16px;
+            color: #ffd700;
+            font-weight: bold;
+            text-shadow: 0 0 5px #ff8800;
+        }
+
+        /* Main Game Container (hidden until loaded) */
+        .game-container {
+            width: 100%;
+            max-width: 412px;
+            height: 100vh;
+            max-height: 840px;
+            background: linear-gradient(135deg, #150802 0%, #050201 100%), url('https://images.unsplash.com/photo-1533167649158-6d508865b680?q=80&w=600&auto=format&fit=crop') no-repeat center center/cover;
+            background-blend-mode: overlay;
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            border: 4px solid #2b1507;
+            box-shadow: 0 0 30px rgba(0,0,0,0.95);
+        }
+
+        /* Top Wooden Multiplier Board */
+        .top-banner {
+            width: 92%;
+            margin: 12px auto 0;
+            background: linear-gradient(to bottom, #6b3410, #2b1204);
+            border: 3px solid #d4af37;
+            border-radius: 12px;
+            text-align: center;
+            padding: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+            position: relative;
+        }
+        .multiplier-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+        }
+        .mult-item {
+            font-size: 12px;
+            color: #8c6a38;
+            font-weight: bold;
+        }
+        .mult-item.main-x1 {
+            font-size: 18px;
+            color: #f3c669;
+            text-shadow: 0 0 8px #ff9900;
+        }
+        .mult-item.active {
+            color: #fff;
+            font-size: 20px;
+            text-shadow: 0 0 10px #ffcc00, 0 0 20px #ff8800;
+            transform: scale(1.1);
+        }
+
+        /* Main Shield Board Container */
+        .board-wrapper {
+            position: relative;
+            width: 94%;
+            margin: 0 auto;
+            background: rgba(24, 10, 3, 0.95);
+            border: 4px solid #4a250c;
+            border-radius: 16px;
+            padding: 12px 6px;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .side-ways-left, .side-ways-right {
+            position: absolute;
+            top: 36%;
+            font-size: 9px;
+            color: #d4af37;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transform: rotate(-90deg);
+            opacity: 0.8;
+        }
+        .side-ways-left { left: -20px; }
+        .side-ways-right { right: -20px; }
+
+        /* Slot Grid Structure (3-4-5-4-3) */
+        .slot-layout {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            width: 100%;
+        }
+        .slot-column {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: center;
+        }
+        .slot-cell {
+            background: linear-gradient(135deg, #100602, #030100);
+            border: 2px solid #3d1f0a;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 56px;
+            height: 56px;
+            position: relative;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.9);
+        }
+        .slot-cell.win {
+            border-color: #ffd700;
+            box-shadow: 0 0 12px #ffd700;
+        }
+
+        /* Symbols & Cards Style */
+        .symbol-icon { font-size: 22px; }
+        .card-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 900;
+            font-size: 18px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .card-a { background: linear-gradient(135deg, #e6ca65, #7a5506); color: #1a0f00; border: 1.5px solid #fff; }
+        .card-k { background: linear-gradient(135deg, #a32b0a, #4a1102); color: #f3c669; }
+        .card-q { background: linear-gradient(135deg, #1b5c2d, #0b2612); color: #f3c669; }
+        .card-j { background: linear-gradient(135deg, #124873, #062036); color: #f3c669; }
+
+        /* Feature Buy & Free Spins Badges */
+        .feature-buy-btn {
+            position: absolute;
+            right: 6px;
+            bottom: -14px;
+            background: linear-gradient(to bottom, #7a3810, #3d1705);
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 10px;
+            padding: 4px 10px;
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.7);
+            z-index: 10;
+        }
+        .free-spins-badge {
+            position: absolute;
+            left: 6px;
+            bottom: -14px;
+            background: linear-gradient(to bottom, #6b1800, #300a00);
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 9px;
+            padding: 4px 8px;
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.7);
+            z-index: 10;
+        }
+
+        /* Bottom Panel */
+        .control-panel {
+            background: linear-gradient(to top, #050201, #170a03);
+            border-top: 3px solid #4a250c;
+            padding: 8px 12px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .bottom-nav-icons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            border-radius: 16px;
+            border: 1px solid #3d1f0a;
+            font-size: 12px;
+            color: #d4af37;
+            font-weight: bold;
+        }
+        .pg-badge {
+            background: #2b1204;
+            border: 1px solid #d4af37;
+            color: #ffd700;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        .action-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .bet-control {
+            display: flex;
+            align-items: center;
+            background: #0a0301;
+            border: 2px solid #4a250c;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .bet-btn {
+            background: #3d1f0a;
+            color: #fff;
+            border: none;
+            width: 26px;
+            height: 36px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .bet-display {
+            padding: 0 8px;
+            font-size: 11px;
+            text-align: center;
+            color: #ffcc00;
+            font-weight: bold;
+        }
+
+        /* Center Spin Button */
+        .spin-btn {
+            width: 68px;
+            height: 68px;
+            background: radial-gradient(circle, #ffcc00 0%, #d47500 65%, #6b2200 100%);
+            border: 3px solid #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(212,117,0,0.8);
+        }
+        .spin-inner {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- VIP LOADING SCREEN -->
+<div id="loader-screen">
+    <div class="loader-container">
+        <div class="loader-title">WILD BOUNTY</div>
+        <!-- The Game Picture -->
+        <img class="loader-img" alt="Game Logo">
+        <!-- Modern Progress Bar -->
+        <div class="loader-progress-track">
+            <div class="loader-progress-fill" id="loaderProgressFill"></div>
+        </div>
+        <div class="loader-text" id="loaderProgressText">Loading... 1%</div>
+    </div>
+</div>
+
+<!-- MAIN GAME CONTAINER (Appears after loading) -->
+<div class="game-container" id="gameContainer">
+    <!-- Top Multiplier Board -->
+    <div class="top-banner">
+        <div class="multiplier-row">
+            <div class="mult-item" id="m512">x512</div>
+            <div class="mult-item" id="m1024">x1024</div>
+            <div class="mult-item main-x1 active" id="m1">x1</div>
+            <div class="mult-item" id="m2">x2</div>
+            <div class="mult-item" id="m4">x4</div>
+        </div>
+    </div>
+
+    <!-- Main Shield Board -->
+    <div class="board-wrapper">
+        <div class="side-ways-left">3600 WAYS</div>
+        <div class="side-ways-right">3600 WAYS</div>
+        
+        <!-- Slot Grid (3-4-5-4-3) -->
+        <div class="slot-layout" id="slotLayout"></div>
+
+        <div class="free-spins-badge">10 OR MORE FREE SPINS</div>
+        <div class="feature-buy-btn" onclick="triggerFeatureBuy()">FEATURE BUY</div>
+    </div>
+
+    <!-- Bottom Panel -->
+    <div class="control-panel">
+        <div class="bottom-nav-icons">
+            <div>⚙️</div>
+            <div>WIN: <span id="winAmount" style="color:#ffd70
