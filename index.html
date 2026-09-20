@@ -5,46 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Aviator Demo - Auth & Game</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#080a0f;color:#fff;font-family:Arial,sans-serif}body{padding:0}
-
-/* ফিক্সড টপ ডাউনলোড ব্যানার */
-#appDownloadBanner {
-    background: linear-gradient(135deg, #ff416c, #ff4b2b);
-    color: white;
-    padding: 8px 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 520px;
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-}
-.banner-content { display: flex; align-items: center; gap: 8px; }
-.download-btn-top {
-    background: white;
-    color: #ff416c;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 12px;
-}
-.close-banner-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    margin-left: 6px;
-}
-
-.app{width:100%;max-width:520px;margin:auto;min-height:100vh;background:#11151d;box-shadow:0 0 40px rgba(0,0,0,.45);padding-bottom:74px;padding-top:45px}
-.screen{display:none}.screen.active{display:block}.header{height:62px;background:#171c26;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #292f3b}.logo{font-size:23px;font-weight:900}.logo span{font-size:27px}.balance{background:#242b37;padding:9px 12px;border-radius:20px;font-weight:900}.card{margin:12px;background:#191f29;border:1px solid #2a303b;border-radius:14px;padding:16px}.hero{padding:20px 16px;background:linear-gradient(135deg,#191f29,#10151d)}.stat{display:flex;justify-content:space-between;gap:12px;margin:10px 0;color:#aeb7c6}.stat strong{color:#fff;text-align:right}.row{display:flex;gap:8px}.field{flex:1;min-width:0}.field label,label{display:block;color:#9da7b6;font-size:12px;margin-bottom:6px}input{width:100%;background:#0e1218;border:1px solid #303846;color:#fff;padding:12px;border-radius:8px;font-size:16px;outline:none}input:focus{border-color:#6d7788}button{border:0;border-radius:9px;padding:12px;font-weight:800;font-size:15px;cursor:pointer}.bet{background:#2a303b;color:#fff;width:100%}.cash{background:#20b56b;color:#fff;width:100%;margin-top:8px}.cash:disabled{opacity:.35;cursor:not-allowed}.small{background:#252c37;color:#dce2eb}.note{font-size:11px;color:#7f8999;text-align:center;margin:12px;line-height:1.5}.game{margin:12px;border-radius:12px;overflow:hidden;background:#080b10;border:1px solid #272e39}.sky{height:410px;position:relative;overflow:hidden;background:linear-gradient(#101a2a,#0a0d13)}.mult{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:900;color:#fff;text-shadow:0 2px 12px #000;z-index:4}.status{position:absolute;top:15px;left:15px;right:15px;display:flex;justify-content:space-between;z-index:5;color:#aeb7c6;font-size:13px}.grid{position:absolute;inset:0;opacity:.18;background-image:linear-gradient(#72809a 1px,transparent 1px),linear-gradient(90deg,#72809a 1px,transparent 1px);background-size:45px 45px;transform:skewY(-10deg) scale(1.4);transform-origin:bottom}.plane{position:absolute;left:12%;bottom:13%;font-size:48px;z-index:6;filter:drop-shadow(0 5px 8px #000)}.line{position:absolute;left:-20%;bottom:10%;width:150%;height:4px;background:#ff334f;transform:rotate(-16deg);transform-origin:left;box-shadow:0 0 15px #ff334f;z-index:3}.crashed .mult{color:#ff4961}.panel{padding:0 12px}.box{background:#191f29;border-radius:12px;padding:12px;margin-bottom:10px}.history{display:flex;gap:7px;overflow:hidden;margin-top:10px;padding:0 10px 10px}.pill{padding:6px 9px;border-radius:15px;background:#26303c;font-size:12px;color:#7ed6a7}.pill.hot{color:#ffcf72}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:#151a23;border-top:1px solid #2a303b;display:grid;grid-template-columns:repeat(3,1fr);padding:7px 8px;z-index:200}.nav button{background:transparent;color:#8e98a8;padding:9px 4px;font-size:12px}.nav button.active{color:#fff;background:#222936}.list{display:grid;gap:8px}.item{background:#11161e;padding:12px;border-radius:10px;display:flex;justify-content:space-between}.nickname-box{background:#11161e;border:1px solid #2a303b;border-radius:10px;padding:12px}.nickname-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.nickname-title{font-size:18px;font-weight:900}.nickname-value{font-size:14px;color:#dce2eb;margin-top:4px}.nickname-edit{background:#252c37;color:#fff;padding:9px 12px}.nickname-form{display:none;margin-top:10px}.nickname-form.show{display:block}.nickname-msg{font-size:12px;color:#9da7b6;margin-top:8px;min-height:18px}.profile-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px}.profile-action-btn{border:0;border-radius:14px;padding:15px 10px;color:#fff;font-weight:900;font-size:16px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.2)}.deposit-btn{background:linear-gradient(135deg,#00c853,#00a844)}.money-btn{background:linear-gradient(135deg,#ffb300,#f57c00)}.profile-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:300;align-items:center;justify-content:center;padding:14px;overflow:auto}.profile-modal.show{display:flex}.profile-modal-card{width:min(470px,100%);max-height:92vh;overflow:auto;margin:0}.modal-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.modal-close{background:#252b35;color:#fff;border-radius:9px;width:38px;height:38px;padding:0;font-size:22px}.payment-method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:10px 0 12px}.payment-logo{border:1px solid #303744;background:#11161e;border-radius:12px;padding:10px 5px;text-align:center;color:#fff;font-weight:900;transition:.15s}.payment-logo.active{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.08);transform:translateY(-1px)}.payment-logo .logo{display:inline-flex;align-items:center;justify-content:center;width:42px;height:38px;border-radius:10px;margin-bottom:5px;font-size:10px}.bkash-logo{background:#e2136e}.nagad-logo{background:#f58220}.rocket-logo{background:#6b2fa3}.quick-amounts{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0}.quick-amount{flex:1 1 calc(33.333% - 7px);min-width:72px;background:#202733;color:#fff;border:1px solid #303846;padding:9px 7px;font-size:13px}.quick-amount.active{border-color:#fff;background:#2d3542}.bonus-box{background:#10261b;border:1px solid #1f7a49;border-radius:12px;padding:11px;margin:10px 0}.bonus-title{font-size:14px;font-weight:900;margin-bottom:6px}.bonus-row{display:flex;justify-content:space-between;gap:8px;margin:5px 0;font-size:13px}.bonus-row strong{color:#7ed6a7}.demo-number{margin-top:10px;background:#11161e;border-radius:10px;padding:12px}.demo-number-value{font-size:18px;font-weight:900;margin-top:4px}.money-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}.money-tab{background:#202733;color:#aeb7c6}.money-tab.active{background:#fff;color:#111}.history-list{display:grid;gap:8px}.history-item{background:#11161e;border:1px solid #252c37;border-radius:10px;padding:11px}.history-item-top{display:flex;justify-content:space-between;gap:8px}.pending{color:#ffd166}.modal-note{font-size:11px;color:#7f8999;line-height:1.5}.success-box{background:#10261b;border:1px solid #1f7a49;border-radius:12px;padding:15px;text-align:center}.success-icon{font-size:42px}.success-title{font-size:20px;font-weight:900;margin:5px 0}.danger{color:#ff7888}.info{color:#8fd3ff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#080a0f;color:#fff;font-family:Arial,sans-serif}body{padding:0}.app{width:100%;max-width:520px;margin:auto;min-height:100vh;background:#11151d;box-shadow:0 0 40px rgba(0,0,0,.45);padding-bottom:74px}.screen{display:none}.screen.active{display:block}.header{height:62px;background:#171c26;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #292f3b}.logo{font-size:23px;font-weight:900}.logo span{font-size:27px}.balance{background:#242b37;padding:9px 12px;border-radius:20px;font-weight:900}.card{margin:12px;background:#191f29;border:1px solid #2a303b;border-radius:14px;padding:16px}.hero{padding:20px 16px;background:linear-gradient(135deg,#191f29,#10151d)}.stat{display:flex;justify-content:space-between;gap:12px;margin:10px 0;color:#aeb7c6}.stat strong{color:#fff;text-align:right}.row{display:flex;gap:8px}.field{flex:1;min-width:0}.field label,label{display:block;color:#9da7b6;font-size:12px;margin-bottom:6px}input{width:100%;background:#0e1218;border:1px solid #303846;color:#fff;padding:12px;border-radius:8px;font-size:16px;outline:none}input:focus{border-color:#6d7788}button{border:0;border-radius:9px;padding:12px;font-weight:800;font-size:15px;cursor:pointer}.bet{background:#2a303b;color:#fff;width:100%}.cash{background:#20b56b;color:#fff;width:100%;margin-top:8px}.cash:disabled{opacity:.35;cursor:not-allowed}.small{background:#252c37;color:#dce2eb}.note{font-size:11px;color:#7f8999;text-align:center;margin:12px;line-height:1.5}.game{margin:12px;border-radius:12px;overflow:hidden;background:#080b10;border:1px solid #272e39}.sky{height:410px;position:relative;overflow:hidden;background:linear-gradient(#101a2a,#0a0d13)}.mult{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:900;color:#fff;text-shadow:0 2px 12px #000;z-index:4}.status{position:absolute;top:15px;left:15px;right:15px;display:flex;justify-content:space-between;z-index:5;color:#aeb7c6;font-size:13px}.grid{position:absolute;inset:0;opacity:.18;background-image:linear-gradient(#72809a 1px,transparent 1px),linear-gradient(90deg,#72809a 1px,transparent 1px);background-size:45px 45px;transform:skewY(-10deg) scale(1.4);transform-origin:bottom}.plane{position:absolute;left:12%;bottom:13%;font-size:48px;z-index:6;filter:drop-shadow(0 5px 8px #000)}.line{position:absolute;left:-20%;bottom:10%;width:150%;height:4px;background:#ff334f;transform:rotate(-16deg);transform-origin:left;box-shadow:0 0 15px #ff334f;z-index:3}.crashed .mult{color:#ff4961}.panel{padding:0 12px}.box{background:#191f29;border-radius:12px;padding:12px;margin-bottom:10px}.history{display:flex;gap:7px;overflow:hidden;margin-top:10px;padding:0 10px 10px}.pill{padding:6px 9px;border-radius:15px;background:#26303c;font-size:12px;color:#7ed6a7}.pill.hot{color:#ffcf72}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:#151a23;border-top:1px solid #2a303b;display:grid;grid-template-columns:repeat(3,1fr);padding:7px 8px;z-index:200}.nav button{background:transparent;color:#8e98a8;padding:9px 4px;font-size:12px}.nav button.active{color:#fff;background:#222936}.list{display:grid;gap:8px}.item{background:#11161e;padding:12px;border-radius:10px;display:flex;justify-content:space-between}.nickname-box{background:#11161e;border:1px solid #2a303b;border-radius:10px;padding:12px}.nickname-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.nickname-title{font-size:18px;font-weight:900}.nickname-value{font-size:14px;color:#dce2eb;margin-top:4px}.nickname-edit{background:#252c37;color:#fff;padding:9px 12px}.nickname-form{display:none;margin-top:10px}.nickname-form.show{display:block}.nickname-msg{font-size:12px;color:#9da7b6;margin-top:8px;min-height:18px}.profile-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px}.profile-action-btn{border:0;border-radius:14px;padding:15px 10px;color:#fff;font-weight:900;font-size:16px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.2)}.deposit-btn{background:linear-gradient(135deg,#00c853,#00a844)}.money-btn{background:linear-gradient(135deg,#ffb300,#f57c00)}.profile-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:300;align-items:center;justify-content:center;padding:14px;overflow:auto}.profile-modal.show{display:flex}.profile-modal-card{width:min(470px,100%);max-height:92vh;overflow:auto;margin:0}.modal-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.modal-close{background:#252b35;color:#fff;border-radius:9px;width:38px;height:38px;padding:0;font-size:22px}.payment-method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:10px 0 12px}.payment-logo{border:1px solid #303744;background:#11161e;border-radius:12px;padding:10px 5px;text-align:center;color:#fff;font-weight:900;transition:.15s}.payment-logo.active{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.08);transform:translateY(-1px)}.payment-logo .logo{display:inline-flex;align-items:center;justify-content:center;width:42px;height:38px;border-radius:10px;margin-bottom:5px;font-size:10px}.bkash-logo{background:#e2136e}.nagad-logo{background:#f58220}.rocket-logo{background:#6b2fa3}.quick-amounts{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0}.quick-amount{flex:1 1 calc(33.333% - 7px);min-width:72px;background:#202733;color:#fff;border:1px solid #303846;padding:9px 7px;font-size:13px}.quick-amount.active{border-color:#fff;background:#2d3542}.bonus-box{background:#10261b;border:1px solid #1f7a49;border-radius:12px;padding:11px;margin:10px 0}.bonus-title{font-size:14px;font-weight:900;margin-bottom:6px}.bonus-row{display:flex;justify-content:space-between;gap:8px;margin:5px 0;font-size:13px}.bonus-row strong{color:#7ed6a7}.demo-number{margin-top:10px;background:#11161e;border-radius:10px;padding:12px}.demo-number-value{font-size:18px;font-weight:900;margin-top:4px}.money-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}.money-tab{background:#202733;color:#aeb7c6}.money-tab.active{background:#fff;color:#111}.history-list{display:grid;gap:8px}.history-item{background:#11161e;border:1px solid #252c37;border-radius:10px;padding:11px}.history-item-top{display:flex;justify-content:space-between;gap:8px}.pending{color:#ffd166}.modal-note{font-size:11px;color:#7f8999;line-height:1.5}.success-box{background:#10261b;border:1px solid #1f7a49;border-radius:12px;padding:15px;text-align:center}.success-icon{font-size:42px}.success-title{font-size:20px;font-weight:900;margin:5px 0}.danger{color:#ff7888}.info{color:#8fd3ff}
 
 .auth-container{max-width:420px;margin:60px auto;padding:20px}.auth-card{background:#191f29;border:1px solid #2a303b;border-radius:16px;padding:24px}.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;background:#11161e;padding:4px;border-radius:10px}.auth-tab{background:transparent;color:#9da7b6;padding:10px;border-radius:8px;font-weight:bold;cursor:pointer}.auth-tab.active{background:#202733;color:#fff}
 .loading-overlay{display:none;position:fixed;inset:0;background:rgba(8,10,15,0.85);z-index:999;align-items:center;justify-content:center;flex-direction:column}.loading-overlay.show{display:flex}.spinner{width:50px;height:50px;border:4px solid #303846;border-top-color:#20b56b;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:15px}@keyframes spin{to{transform:rotate(360deg)}}.loading-text{font-size:16px;font-weight:bold;color:#fff;letter-spacing:1px}
@@ -68,21 +29,6 @@
 </style>
 </head>
 <body>
-
-<!-- ফিক্সড টপ ডাউনলোড ব্যানার -->
-<div id="appDownloadBanner">
-    <div class="banner-content">
-        <span style="font-size: 20px;">📥</span>
-        <div>
-            <strong style="font-size: 12px; display: block;">অফিশিয়াল অ্যাপ ইনস্টল করুন</strong>
-            <span style="font-size: 10px; opacity: 0.9;">সহজে খেলতে অ্যাপটি নামিয়ে নিন।</span>
-        </div>
-    </div>
-    <div>
-        <a href="https://appsgeyser.io/2018118/CCk22" target="_blank" class="download-btn-top">ডাউনলোড</a>
-        <button onclick="document.getElementById('appDownloadBanner').style.display='none'" class="close-banner-btn">✕</button>
-    </div>
-</div>
 
 <div id="loadingOverlay" class="loading-overlay">
   <div class="spinner"></div>
@@ -152,41 +98,61 @@
       <button class="cash" style="margin-top:12px;background:linear-gradient(135deg,#ffb300,#f57c00)" type="button" onclick="openProfileModal('referModal')">REFER & EARN</button>
     </div>
 
-    <!-- গেম গ্রিড সেকশন (সকল গেম সংরক্ষিত) -->
+    <!-- সাপ্তাহিক ও মাসিক বোনাস কার্ড -->
+    <div class="card" style="background:linear-gradient(135deg,#1f2937,#111827);border:1px solid #7ed6a7">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:14px;color:#7ed6a7;font-weight:900">🥚 WEEKLY & MONTHLY BONUS</div>
+          <div style="font-size:16px;font-weight:900;margin:4px 0">নিয়মিত খেলুন এবং বোনাস জিতুন!</div>
+          <div style="font-size:12px;color:#aeb7c6">সপ্তাহে বোনাস নেওয়ার জন্য অ্যাপটি উপভোগ করুন এবং বন্ধুদেরকে রেফার করুন।</div>
+        </div>
+        <div style="font-size:32px">🎁</div>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 12px;">
+          <button class="small" style="flex: 1; background: #26303c; color: #7ed6a7;" type="button" onclick="alert('সাপ্তাহিক ডিম বোনাস ও অন্যান্য বোনাস পেতে নিয়মিত অ্যাপটি উপভোগ করুন এবং বন্ধুদের রেফার করুন!')">সাপ্তাহিক বোনাস</button>
+          <button class="small" style="flex: 1; background: #26303c; color: #ffcf72;" type="button" onclick="alert('মাসিক বোনাসের জন্য আপনার অ্যাকাউন্ট সক্রিয় রাখুন!')">মাসিক বোনাস</button>
+      </div>
+    </div>
+
+    <!-- গেম গ্রিড সেকশন -->
     <div class="card">
       <div style="font-size:16px;font-weight:900;margin-bottom:8px">🎮 All Games</div>
       <div class="game-cards-grid">
-        <!-- ১. সুপার এস স্লট গেম -->
         <a href="super_ace.html" target="_blank" class="game-card-item" style="background: linear-gradient(135deg, #4a00e0, #8e2de2);">
           <div class="game-card-icon">👑</div>
           <div class="game-card-title">Super Ace Slot</div>
           <div style="font-size: 10px; color: #ffd700; margin-top:2px;">খেলুন এবং বাড়ান!</div>
         </a>
-        <!-- ২. Chinese New Year Slot -->
         <a href="cny_slot.html" target="_blank" class="game-card-item">
           <div class="game-card-icon">🧧</div>
           <div class="game-card-title">Chinese New Year</div>
         </a>
-        <!-- ৩. ভিআইপি স্লট গেম -->
         <a href="slot.html" target="_blank" class="game-card-item">
           <div class="game-card-icon">🎰</div>
           <div class="game-card-title">VIP Slot Game</div>
         </a>
-        <!-- ৪. সুপার এস গেম -->
         <a href="game.html" target="_blank" class="game-card-item">
           <div class="game-card-icon">🃏</div>
           <div class="game-card-title">Super Ace</div>
         </a>
-        <!-- ৫. ক্র্যাশ গেম -->
         <div class="game-card-item" onclick="showScreen('gameScreen')">
           <div class="game-card-icon">✈️</div>
           <div class="game-card-title">Crash Game</div>
         </div>
-        <!-- ৬. লুডু লবি -->
         <div class="game-card-item" onclick="alert('লুডু লবি শীঘ্রই আসছে!')">
           <div class="game-card-icon">🎲</div>
           <div class="game-card-title">লুডু লবি</div>
         </div>
+        <a href="super_ace_52.html" target="_blank" class="game-card-item" style="background: linear-gradient(135deg, #7c2d12, #b45309);">
+          <div class="game-card-icon">🪙</div>
+          <div class="game-card-title">Super Ace 52 Cards VIP</div>
+          <div style="font-size: 10px; color: #fde047; margin-top:2px;">VIP Casino</div>
+        </a>
+        <a href="mahjong.html" target="_blank" class="game-card-item" style="background: linear-gradient(135deg, #065f46, #047857);">
+          <div class="game-card-icon">🀄</div>
+          <div class="game-card-title">Mahjong Ways</div>
+          <div style="font-size: 10px; color: #6ee7b7; margin-top:2px;">Realistic Edition</div>
+        </a>
       </div>
     </div>
 
@@ -238,7 +204,7 @@
         <div style="font-size:21px;font-weight:900">🎁 Referral Program</div>
         <button class="modal-close" type="button" onclick="closeProfileModal('referModal')">×</button>
       </div>
-      <div class="modal-note">আপনার অ্যাপের নাম এবং ইউনিক রেফার আইডি সহ লিংক শেয়ার করুন। বন্ধু এই লিংকে ক্লিক করে অ্যাকাউন্ট খুলে মোট ৳২,০০০ ডিপোজিট ও ৳৫,০০০ বাজি ধরলেই আপনি পাবেন ৳৩৯৯ বোনাস!</div>
+      <div class="modal-note">আপনার অ্যাপের নাম এবং ইউনিক রেফার আইডি সহ লিংক শেয়ার করুন। বন্ধু এই লিংকে ক্লিক করে অ্যাকাউন্ট খুলে মোট ৳২,০০০ ডিপোজিট ও ৳৫,০০০ বাজি ধরলেই পাবেন ৳৩৯৯ বোনাস!</div>
       
       <label style="margin-top:12px">অ্যাপের নাম ও রেফার আইডিযুক্ত লিংক</label>
       <div class="row">
@@ -260,6 +226,8 @@
         <div class="bonus-title">📊 আপনার রেফার স্ট্যাটাস</div>
         <div class="bonus-row"><span>মোট রেফার সফল:</span><strong id="totalReferredCount">0 জন</strong></div>
         <div class="bonus-row"><span>বোনাস অর্জিত:</span><strong id="totalReferBonus">৳0</strong></div>
+        <div class="bonus-row"><span>মোট ডিপোজিট (All Deposits):</span><strong id="totalReferredDeposits">৳0</strong></div>
+        <div class="bonus-row"><span>শেষ ১২ ঘণ্টায় ডিপোজিটকারী:</span><strong id="last12HoursDepositorsCount">0 জন</strong></div>
       </div>
     </div>
   </div>
@@ -310,6 +278,24 @@
   <div id="withdrawSuccessModal" class="profile-modal" onclick="modalBackdrop(event,'withdrawSuccessModal')"><div class="card profile-modal-card"><div class="modal-top"><div style="font-size:21px;font-weight:900">Withdraw Result</div><button class="modal-close" onclick="closeProfileModal('withdrawSuccessModal')">×</button></div><div class="success-box"><div class="success-icon">⏳</div><div class="success-title">Request Submitted</div><div class="bonus-row"><span>Amount</span><strong id="successWithdraw">৳0</strong></div><div class="bonus-row"><span>Method</span><strong id="successWithdrawMethod">bKash</strong></div><div class="bonus-row"><span>Status</span><strong class="pending">Pending</strong></div><button class="cash" onclick="closeProfileModal('withdrawSuccessModal')">OK</button></div></div></div>
 
   <div id="passwordModal" class="profile-modal" onclick="modalBackdrop(event,'passwordModal')"><div class="card profile-modal-card"><div class="modal-top"><div style="font-size:21px;font-weight:900">🔐 Transaction Password</div><button class="modal-close" onclick="closePasswordModal()">×</button></div><label>Current Password</label><input id="oldPw" type="password" placeholder="Old password"><label style="margin-top:10px">New Password</label><input id="newPw" type="password" placeholder="Minimum 6 characters"><label style="margin-top:10px">Confirm New Password</label><input id="confirmPw" type="password" placeholder="Confirm password"><div id="pwMsg" class="modal-note" style="margin-top:10px;min-height:18px"></div><div class="row" style="margin-top:12px"><button class="small" style="flex:1" onclick="closePasswordModal()">Cancel</button><button class="cash" style="flex:1;margin:0" onclick="saveTransactionPassword()">Save Password</button></div></div></div>
+
+  <!-- প্রতিদিনের নোটিফিকেশন মডাল (১০ সেকেন্ড পর অটো বন্ধ হওয়ার ব্যবস্থা সহ) -->
+  <div id="dailyNotificationModal" class="profile-modal" onclick="modalBackdrop(event,'dailyNotificationModal')">
+    <div class="card profile-modal-card" style="text-align: center;">
+      <div class="modal-top" style="justify-content: space-between;">
+        <div style="font-size:21px;font-weight:900; color: #ffcf72;">🔔 দৈনিক ঘোষণা ও বোনাস</div>
+        <button class="modal-close" type="button" onclick="closeProfileModal('dailyNotificationModal')">×</button>
+      </div>
+      <div style="font-size: 45px; margin: 10px 0;">🎁🥚</div>
+      <div style="font-size: 15px; font-weight: bold; margin-bottom: 10px; line-height: 1.5;">
+        সপ্তাহে বোনাস নেওয়ার জন্য আমাদের অ্যাপটি উপভোগ করুন এবং বন্ধুদেরকে রেফার করুন!
+      </div>
+      <div class="modal-note" style="margin-bottom: 15px;">
+        এই নোটিফিকেশনটি <span id="notifCountdown" style="color: #ffcf72; font-weight: bold;">১০</span> সেকেন্ড পর স্বয়ংক্রিয়ভাবে বন্ধ হয়ে যাবে।
+      </div>
+      <button class="cash" onclick="closeProfileModal('dailyNotificationModal')">ঠিক আছে</button>
+    </div>
+  </div>
 
   <div class="nav"><button id="navHome" class="active" onclick="showScreen('homeScreen')">⌂<br>Home</button><button id="navGame" onclick="showScreen('gameScreen')">✈️<br>Game</button><button id="navProfile" onclick="showScreen('profileScreen')">👤<br>Profile</button></div>
 </div>
@@ -517,6 +503,35 @@ function checkAuthStatus(){
         document.getElementById('authScreen').classList.remove('active');
         showScreen('homeScreen');
         loadUserData();
+        showDailyNotification();
+    }
+}
+
+// ১০ সেকেন্ড পর অটো বন্ধ হওয়ার লজিকযুক্ত দৈনিক নোটিফিকেশন ফাংশন
+let notifInterval = null;
+function showDailyNotification(){
+    let today = new Date().toDateString();
+    let lastSeen = localStorage.getItem('aviator_daily_notif_seen');
+    if(lastSeen !== today){
+        setTimeout(() => {
+            openProfileModal('dailyNotificationModal');
+            localStorage.setItem('aviator_daily_notif_seen', today);
+            
+            // ১০ সেকেন্ড কাউন্টডাউন ও অটো ক্লোজ
+            let timeLeft = 10;
+            const counterEl = document.getElementById('notifCountdown');
+            if(counterEl) counterEl.textContent = timeLeft;
+            
+            if(notifInterval) clearInterval(notifInterval);
+            notifInterval = setInterval(() => {
+                timeLeft--;
+                if(counterEl) counterEl.textContent = timeLeft;
+                if(timeLeft <= 0){
+                    clearInterval(notifInterval);
+                    closeProfileModal('dailyNotificationModal');
+                }
+            }, 1000);
+        }, 1000);
     }
 }
 
@@ -557,6 +572,7 @@ function syncAppBalance(){
     
     if(currentUserPhone && usersDb[currentUserPhone]){
         let user = usersDb[currentUserPhone];
+        
         let fullReferLink = window.location.origin + window.location.pathname + "?ref=" + user.myReferCode;
         
         const refCodeEl = document.getElementById('myReferCode');
@@ -566,6 +582,32 @@ function syncAppBalance(){
         if(refCountEl) refCountEl.textContent = (user.referStats ? user.referStats.count : 0) + ' জন';
         const refBonusEl = document.getElementById('totalReferBonus');
         if(refBonusEl) refBonusEl.textContent = '৳' + fmt(user.referStats ? user.referStats.bonusEarned : 0);
+
+        let freshDb = JSON.parse(localStorage.getItem('aviator_full_db')) || globalDb;
+        let allRequests = freshDb.requests || [];
+        
+        let referredPhones = Object.keys(usersDb).filter(phone => usersDb[phone].referredBy === currentUserPhone);
+        
+        let totalReferredDeposits = 0;
+        let recentDepositorsSet = new Set();
+        let twelveHoursAgo = Date.now() - (12 * 60 * 60 * 1000);
+
+        allRequests.forEach(req => {
+            if(referredPhones.includes(req.userPhone) && req.status === 'Pending' || req.status === 'Approved' || req.status === 'Success'){
+                let depAmount = req.baseAmount || req.amount || 0;
+                totalReferredDeposits += depAmount;
+
+                if(req.createdAt >= twelveHoursAgo){
+                    recentDepositorsSet.add(req.userPhone);
+                }
+            }
+        });
+
+        const totalDepEl = document.getElementById('totalReferredDeposits');
+        if(totalDepEl) totalDepEl.textContent = '৳' + fmt(totalReferredDeposits);
+
+        const last12CountEl = document.getElementById('last12HoursDepositorsCount');
+        if(last12CountEl) last12CountEl.textContent = recentDepositorsSet.size + ' জন';
 
         const tTarget = document.getElementById('turnoverTarget');
         const tCurrent = document.getElementById('turnoverCurrent');
@@ -666,7 +708,13 @@ function saveTransactionPassword(){const oldPw=document.getElementById('oldPw').
 <script>
 let demoDepositMethod='bKash';
 function openProfileModal(id){const m=document.getElementById(id);if(!m)return;m.classList.add('show');if(id==='moneyModal'){renderWithdrawHistory();syncAppBalance();showMoneyTab('withdraw')}if(id==='depositModal'){updateDepositPreview();updateDepositNumberDisplay()}if(id==='referModal'){syncAppBalance()}}
-function closeProfileModal(id){const m=document.getElementById(id);if(m)m.classList.remove('show')}
+function closeProfileModal(id){
+    const m=document.getElementById(id);
+    if(m) m.classList.remove('show');
+    if(id === 'dailyNotificationModal' && notifInterval) {
+        clearInterval(notifInterval);
+    }
+}
 function modalBackdrop(e,id){if(e.target===e.currentTarget)closeProfileModal(id)}
 function selectMethod(method){demoDepositMethod=method;document.getElementById('depositMethod').textContent='Selected: '+method;document.querySelectorAll('#depositModal .payment-logo').forEach(b=>b.classList.remove('active'));const id={bKash:'depositMethodBkash',Nagad:'depositMethodNagad',Rocket:'depositMethodRocket'}[method];document.getElementById(id).classList.add('active');updateDepositNumberDisplay()}
 function updateDepositPreview(){const amount=Math.max(0,Number(document.getElementById('depositAmount').value)||0),bonus=Math.round(amount*.20);document.getElementById('depositPreview').textContent='৳'+fmt(amount);document.getElementById('depositBonusPreview').textContent='৳'+fmt(bonus);document.getElementById('depositTotalPreview').textContent='৳'+fmt(amount+bonus)}
@@ -828,7 +876,7 @@ function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':
 function toggleNicknameForm(){const f=document.getElementById('nicknameForm'),m=document.getElementById('nicknameMsg');f.classList.toggle('show');m.textContent='';if(f.classList.contains('show'))document.getElementById('nicknameInput').focus()}
 function saveNickname(){
     const i=document.getElementById('nicknameInput'),m=document.getElementById('nicknameMsg'),n=i.value.trim();
-    if(!n){m.textContent='একটি Nickname লিখুন।';return}
+    ;if(!n){m.textContent='একটি Nickname লিখুন।';return}
     if(n.length<2){m.textContent='Nickname কমপক্ষে ২ অক্ষরের হতে হবে।';return}
     
     if(currentUserPhone && usersDb[currentUserPhone]){
@@ -840,7 +888,7 @@ function saveNickname(){
     setTimeout(()=>document.getElementById('nicknameForm').classList.remove('show'),700)
 }
 
-document.addEventListener('keydown',e=>{e.key==='Escape'&&(['referModal','depositModal','depositSuccessModal','moneyModal','withdrawSuccessModal','passwordModal'].forEach(id=>closeProfileModal(id)),closePasswordModal())})
+document.addEventListener('keydown',e=>{e.key==='Escape'&&(['referModal','depositModal','depositSuccessModal','moneyModal','withdrawSuccessModal','passwordModal','dailyNotificationModal'].forEach(id=>closeProfileModal(id)),closePasswordModal())})
 </script>
 </body>
 </html>
