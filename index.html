@@ -25,17 +25,55 @@
 .game-card-icon{font-size:28px;margin-bottom:6px}
 .game-card-title{font-size:13px;font-weight:900}
 
+/* Top Notification Bar CSS */
+.notification-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ff9800;
+    color: #000;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 14px;
+    z-index: 9999;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.notification-text {
+    flex-grow: 1;
+    text-align: center;
+    font-weight: 500;
+}
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #000;
+    padding: 0 5px;
+}
+
 @media(max-width:420px){.profile-action-btn{font-size:14px;padding:13px 7px}.sky{height:360px}.mult{font-size:46px}.row{gap:6px}}
 </style>
 </head>
 <body>
+
+<!-- টপ নোটিফিকেশন বার (সকল প্রকার মেসেজসহ) -->
+<div id="topNotificationBox" class="notification-banner">
+    <span id="topNotificationText" class="notification-text">অভিনন্দন! আপনি আজকে প্রোফাইল লস বোনাস পেয়েছেন। আমাদের অ্যাপটি উপভোগ করার জন্য আপনাকে ধন্যবাদ!</span>
+    <button onclick="closeNotification()" class="close-btn">&times;</button>
+</div>
 
 <div id="loadingOverlay" class="loading-overlay">
   <div class="spinner"></div>
   <div id="loadingText" class="loading-text">দয়া করে অপেক্ষা করুন...</div>
 </div>
 
-<div class="app">
+<div class="app" style="margin-top: 35px;">
   
   <div id="authScreen" class="screen active">
     <div class="auth-container">
@@ -194,8 +232,46 @@
     </div>
 
     <div class="card"><div class="nickname-box"><div class="nickname-head"><div><div class="nickname-title">✨ Nickname</div><div class="nickname-value" id="profileNickname">Not set</div></div><button class="nickname-edit" type="button" onclick="toggleNicknameForm()">✏️ Edit</button></div><div id="nicknameForm" class="nickname-form"><label>Your Nickname</label><input id="nicknameInput" type="text" maxlength="30" placeholder="Enter your nickname"><div class="row" style="margin-top:9px"><button class="small" style="flex:1" type="button" onclick="toggleNicknameForm()">Cancel</button><button class="cash" style="flex:1;margin:0" type="button" onclick="saveNickname()">Save</button></div><div id="nicknameMsg" class="nickname-msg"></div></div></div></div>
-    <div class="profile-action-grid"><button class="profile-action-btn deposit-btn" type="button" onclick="openProfileModal('depositModal')">📥 Deposit<span>Deposit + 20% Bonus</span></button><button class="profile-action-btn money-btn" type="button" onclick="openProfileModal('moneyModal')">💰 Money<span>Balance + Withdraw</span></button></div>
+    
+    <div class="profile-action-grid">
+      <button class="profile-action-btn deposit-btn" type="button" onclick="openProfileModal('depositModal')">📥 Deposit<span>Deposit + 20% Bonus</span></button>
+      <button class="profile-action-btn money-btn" type="button" onclick="openProfileModal('moneyModal')">💰 Money<span>Balance + Withdraw</span></button>
+    </div>
+
+    <!-- নতুন ইন্টারন্যাশনাল এসএমএস বাটন -->
+    <div class="card" style="margin-top:0;">
+      <button class="small" style="width:100%; background:linear-gradient(135deg,#0088cc,#005580); color:#fff; padding:14px; font-weight:900; font-size:15px; border-radius:12px;" type="button" onclick="openProfileModal('internationalSmsModal')">🌐 ইন্টারন্যাশনাল এসএমএস (সকল নোটিফিকেশন)</button>
+    </div>
+
     <div class="card"><div style="font-size:18px;font-weight:900;margin-bottom:10px">⚙️ Settings</div><button class="small" style="width:100%" onclick="openPasswordModal()">🔐 Transaction Password</button><div id="passwordStatus" style="font-size:12px;color:#9da7b6;margin-top:9px">Password not set</div></div>
+  </div>
+
+  <!-- ইন্টারন্যাশনাল এসএমএস মডাল (যেখানে সব মেসেজ দেখতে পারবে) -->
+  <div id="internationalSmsModal" class="profile-modal" onclick="modalBackdrop(event,'internationalSmsModal')">
+    <div class="card profile-modal-card">
+      <div class="modal-top">
+        <div style="font-size:21px;font-weight:900;color:#ffcf72;">🌐 ইন্টারন্যাশনাল এসএমএস</div>
+        <button class="modal-close" type="button" onclick="closeProfileModal('internationalSmsModal')">×</button>
+      </div>
+      <div class="modal-note" style="margin-bottom:12px;">আপনার সমস্ত নোটিফিকেশন এবং সিস্টেম মেসেজগুলো নিচে দেখতে পাবেন:</div>
+      
+      <div class="list" id="smsListBox">
+        <div class="item" style="flex-direction:column; gap:6px;">
+          <div style="display:flex; justify-content:space-between; font-weight:bold; color:#ffcf72;">
+            <span>🎁 প্রোফাইল লস বোনাস</span>
+            <span style="font-size:11px; color:#aeb7c6;">আজ</span>
+          </div>
+          <div style="font-size:13px; color:#dce2eb;">অভিনন্দন! আপনি আজকে প্রোফাইল লস বোনাস পেয়েছেন। আমাদের অ্যাপটি উপভোগ করার জন্য আপনাকে ধন্যবাদ!</div>
+        </div>
+        <div class="item" style="flex-direction:column; gap:6px;">
+          <div style="display:flex; justify-content:space-between; font-weight:bold; color:#7ed6a7;">
+            <span>📢 সাপ্তাহিক ঘোষণা</span>
+            <span style="font-size:11px; color:#aeb7c6;">নিয়মিত</span>
+          </div>
+          <div style="font-size:13px; color:#dce2eb;">সপ্তাহে বোনাস নেওয়ার জন্য আমাদের অ্যাপটি উপভোগ করুন এবং বন্ধুদেরকে রেফার করুন।</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id="referModal" class="profile-modal" onclick="modalBackdrop(event,'referModal')">
@@ -279,7 +355,7 @@
 
   <div id="passwordModal" class="profile-modal" onclick="modalBackdrop(event,'passwordModal')"><div class="card profile-modal-card"><div class="modal-top"><div style="font-size:21px;font-weight:900">🔐 Transaction Password</div><button class="modal-close" onclick="closePasswordModal()">×</button></div><label>Current Password</label><input id="oldPw" type="password" placeholder="Old password"><label style="margin-top:10px">New Password</label><input id="newPw" type="password" placeholder="Minimum 6 characters"><label style="margin-top:10px">Confirm New Password</label><input id="confirmPw" type="password" placeholder="Confirm password"><div id="pwMsg" class="modal-note" style="margin-top:10px;min-height:18px"></div><div class="row" style="margin-top:12px"><button class="small" style="flex:1" onclick="closePasswordModal()">Cancel</button><button class="cash" style="flex:1;margin:0" onclick="saveTransactionPassword()">Save Password</button></div></div></div>
 
-  <!-- প্রতিদিনের নোটিফিকেশন মডাল (১০ সেকেন্ড পর অটো বন্ধ হওয়ার ব্যবস্থা সহ) -->
+  <!-- প্রতিদিনের নোটিফিকেশন মডাল -->
   <div id="dailyNotificationModal" class="profile-modal" onclick="modalBackdrop(event,'dailyNotificationModal')">
     <div class="card profile-modal-card" style="text-align: center;">
       <div class="modal-top" style="justify-content: space-between;">
@@ -507,7 +583,6 @@ function checkAuthStatus(){
     }
 }
 
-// ১০ সেকেন্ড পর অটো বন্ধ হওয়ার লজিকযুক্ত দৈনিক নোটিফিকেশন ফাংশন
 let notifInterval = null;
 function showDailyNotification(){
     let today = new Date().toDateString();
@@ -517,7 +592,6 @@ function showDailyNotification(){
             openProfileModal('dailyNotificationModal');
             localStorage.setItem('aviator_daily_notif_seen', today);
             
-            // ১০ সেকেন্ড কাউন্টডাউন ও অটো ক্লোজ
             let timeLeft = 10;
             const counterEl = document.getElementById('notifCountdown');
             if(counterEl) counterEl.textContent = timeLeft;
@@ -696,6 +770,13 @@ function doCrash(){crashed=true;stateEl.textContent='CRASHED';sky.classList.add(
 function startCountdown(){clearInterval(countdownTimer);countdown.style.display='flex';let n=10;countNum.textContent=n;stateEl.textContent='NEXT ROUND';countdownTimer=setInterval(()=>{n--;countNum.textContent=n;if(n<=0){clearInterval(countdownTimer);countdown.style.display='none';nextRound()}},1000)}
 function nextRound(){roundNo++;document.getElementById('round').textContent='ROUND #'+String(roundNo).padStart(3,'0');stateEl.textContent='FLYING';sky.classList.remove('crashed');plane.style.transition='none';plane.style.transform='none';plane.style.left='12%';plane.style.bottom='13%';multiplier=1;crashAt=randomCrash();start=performance.now();crashed=false;[1,2].forEach(slot=>document.getElementById('betBtn'+slot).textContent='BET '+slot);multEl.textContent='1.00×';requestAnimationFrame(render)}
 function showScreen(id){if(!currentUserPhone){checkAuthStatus();return;}document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));const el=document.getElementById(id);if(el)el.classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));const map={homeScreen:'navHome',gameScreen:'navGame',profileScreen:'navProfile'};const nav=document.getElementById(map[id]);if(nav)nav.classList.add('active');syncAppBalance()}
+
+function closeNotification() {
+    const box = document.getElementById('topNotificationBox');
+    if (box) {
+        box.style.display = 'none';
+    }
+}
 </script>
 
 <script>
@@ -719,7 +800,7 @@ function modalBackdrop(e,id){if(e.target===e.currentTarget)closeProfileModal(id)
 function selectMethod(method){demoDepositMethod=method;document.getElementById('depositMethod').textContent='Selected: '+method;document.querySelectorAll('#depositModal .payment-logo').forEach(b=>b.classList.remove('active'));const id={bKash:'depositMethodBkash',Nagad:'depositMethodNagad',Rocket:'depositMethodRocket'}[method];document.getElementById(id).classList.add('active');updateDepositNumberDisplay()}
 function updateDepositPreview(){const amount=Math.max(0,Number(document.getElementById('depositAmount').value)||0),bonus=Math.round(amount*.20);document.getElementById('depositPreview').textContent='৳'+fmt(amount);document.getElementById('depositBonusPreview').textContent='৳'+fmt(bonus);document.getElementById('depositTotalPreview').textContent='৳'+fmt(amount+bonus)}
 function clearQuickDepositActive(){document.querySelectorAll('#depositModal .quick-amount').forEach(b=>b.classList.remove('active'))}
-function setDepositAmount(amount){document.getElementById('depositAmount').value=amount;updateDepositPreview();document.querySelectorAll('#depositModal .quick-amount').forEach(b=>b.classList.toggle('active',b.textContent.replace(/[^0-9]/g,'')===String(amount)))}
+function setDepositAmount(amount){document.getElementById('depositAmount').value=amount;updateDepositPreview();document.querySelectorAll('#depositModal .quick-amount').forEach(b=>b.classList.toggle('active',b.textContent.replace(/[^0-9]/g, '')===String(amount)))}
 
 function submitDemoDeposit(){
     const amount=Number(document.getElementById('depositAmount').value);
@@ -876,7 +957,7 @@ function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':
 function toggleNicknameForm(){const f=document.getElementById('nicknameForm'),m=document.getElementById('nicknameMsg');f.classList.toggle('show');m.textContent='';if(f.classList.contains('show'))document.getElementById('nicknameInput').focus()}
 function saveNickname(){
     const i=document.getElementById('nicknameInput'),m=document.getElementById('nicknameMsg'),n=i.value.trim();
-    ;if(!n){m.textContent='একটি Nickname লিখুন।';return}
+    if(!n){m.textContent='একটি Nickname লিখুন।';return}
     if(n.length<2){m.textContent='Nickname কমপক্ষে ২ অক্ষরের হতে হবে।';return}
     
     if(currentUserPhone && usersDb[currentUserPhone]){
@@ -888,7 +969,7 @@ function saveNickname(){
     setTimeout(()=>document.getElementById('nicknameForm').classList.remove('show'),700)
 }
 
-document.addEventListener('keydown',e=>{e.key==='Escape'&&(['referModal','depositModal','depositSuccessModal','moneyModal','withdrawSuccessModal','passwordModal','dailyNotificationModal'].forEach(id=>closeProfileModal(id)),closePasswordModal())})
+document.addEventListener('keydown',e=>{e.key==='Escape'&&(['referModal','depositModal','depositSuccessModal','moneyModal','withdrawSuccessModal','passwordModal','dailyNotificationModal','internationalSmsModal'].forEach(id=>closeProfileModal(id)),closePasswordModal())})
 </script>
 </body>
 </html>
